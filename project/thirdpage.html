@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>User Details</title>
+    <!-- <link href="style-3.css" rel="stylesheet"> -->
+  </head>
+  <body>
+    <button id="logout-btn">Logout</button>
+    <h1>User Details</h1>
+    <div id="user-details"></div>
+
+    <!-- JavaScript code to fetch details of the particular user -->
+
+    <script>
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        alert('Please enter your information before accessing this page.');
+        window.location.href = 'first-page.html';
+      }
+
+      const selectedUser = JSON.parse(localStorage.getItem('selectedUser'));
+      if (!selectedUser) {
+        alert('Please select a user from the list before accessing this page.');
+        window.location.href = 'thirdpage.html';
+      }
+
+      const userDetails = document.getElementById('user-details');
+
+      const table = document.createElement('table');
+      table.style.borderCollapse = 'collapse';
+      table.style.marginTop = '20px';
+
+      for (const [key, value] of Object.entries(selectedUser)) {
+        const row = document.createElement('tr');
+        const keyCell = document.createElement('td');
+        const valueCell = document.createElement('td');
+        keyCell.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+        valueCell.textContent = value;
+        row.appendChild(keyCell);
+        row.appendChild(valueCell);
+        table.appendChild(row);
+      }
+
+      userDetails.appendChild(table);
+
+      const logoutBtn = document.getElementById('logout-btn');
+      logoutBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = 'index.html';
+      });
+    </script>
+  </body>
+</html>

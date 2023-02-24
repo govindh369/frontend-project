@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Details</title>
+    <link href="style1.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <h1>Home Page</h1>
+    <form id="user-form">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" name="country_code" title="enter 10 digits" pattern="[1-9]{1}[0-9]{9}" required >
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <input type="submit" value="LOGIN">
+      <div id="error-container"></div>
+    </form>
+    
+    <!-- JavaScript code for checking error and storing in localStorage -->
+    
+    <script>
+      const form = document.getElementById('user-form');
+      const errorContainer = document.getElementById('error-container');
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+
+        if (!name || !phone || !email) {
+          errorContainer.innerHTML = 'Please fill out all fields.';
+          return;
+        }
+
+        const user = { name, phone, email };
+        localStorage.setItem('user', JSON.stringify(user));
+        window.location.href = 'secondpage.html';
+      });
+    </script>
+  </body>
+</html>

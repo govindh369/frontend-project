@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home Page</title>
+    <link href="style2.css" rel="stylesheet">
+  </head>
+  <body>
+    <button id="logout-btn">Logout</button>
+    <h1>Welcome!</h1>
+    <p>Click on a user to see their details:</p>
+    <ul id="user-list"></ul>
+    
+
+
+    <script>
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) {
+        alert('Please enter your information before accessing this page.');
+        window.location.href = 'index.html';
+      }
+
+      const userList = document.getElementById('user-list');
+
+      fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(data => {
+          data.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = user.name;
+            li.addEventListener('click', function() {
+              localStorage.setItem('selectedUser', JSON.stringify(user));
+              window.location.href = 'thirdpage.html';
+            });
+            userList.appendChild(li);
+          });
+        });
+
+      const logoutBtn = document.getElementById('logout-btn');
+      logoutBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = 'index.html';
+      });
+    </script>
+  
+</body>
+</html>
